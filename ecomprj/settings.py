@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig'
+
+    #custom
+    'core',
+    'userauths'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,5 @@ JAZZMIN_SETTINGS = {
     'site_logo': "assets/imgs/theme/logo.svg",
     'copyright': "Your Website Name.",
 }
+
+AUTH_USER_MODEL = 'userauths.User'
