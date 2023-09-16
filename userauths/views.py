@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.conf import settings
 from userauths.models import Profile, User
 
-User = settings.AUTH_USER_MODEL
+# User = settings.AUTH_USER_MODEL
 
 def register_view(request):
     
