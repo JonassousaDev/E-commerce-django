@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third Party
+    'taggit',
+    'ckeditor',
+
     #custom
     'core',
-    'userauths'
+    'userauths',
+
 ]
 
 MIDDLEWARE = [
@@ -142,4 +147,25 @@ JAZZMIN_SETTINGS = {
     'copyright': "Your Website Name.",
 }
 
+LOGIN_URL = "userauths:sign-in"
+LOGIN_REDIRECT_URL = "core:index"
+LOGOUT_REDIRECT_URL = "userauths:sign-in"
+
 AUTH_USER_MODEL = 'userauths.User'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'codeSnippet_theme': 'monokai',
+        'toolbar': 'all',
+        'extraPlugins': ','.join(
+            [
+                'codesnippet',
+                'widget',
+                'dialog'
+            ]
+        ),
+    }
+}
