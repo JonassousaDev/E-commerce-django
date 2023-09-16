@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.conf import settings
 from userauths.models import Profile, User
 
-
 User = settings.AUTH_USER_MODEL
 
 def register_view(request):
@@ -51,11 +50,11 @@ def login_view(request):
     return render(request, "userauths/sign-in.html")
     
 
-# def logout_view(request):
+def logout_view(request):
 
-#     logout(request)
-#     messages.success(request, "You logged out.")
-#     return redirect("userauths:sign-in")
+    logout(request)
+    messages.success(request, "You logged out.")
+    return redirect("userauths:sign-in")
 
 
 # def profile_update(request):
