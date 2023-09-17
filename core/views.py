@@ -3,7 +3,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 # from regex import E
 # from requests import session
-# from taggit.models import Tag
+from taggit.models import Tag
 from core.models import Product, Category, Vendor, CartOrder, CartOrderProducts, ProductImages, ProductReview, wishlist_model, Address
 # from userauths.models import ContactUs, Profile
 # from core.forms import ProductReviewForm
@@ -22,109 +22,106 @@ from core.models import Product, Category, Vendor, CartOrder, CartOrderProducts,
 # from django.core import serializers
 
 def index(request):
-    # bannanas = Product.objects.all().order_by("-id")
     products = Product.objects.filter(product_status="published", featured=True).order_by("-id")
 
     context = {
         "products":products
     }
-
     return render(request, 'core/index.html', context)
 
 
-# def product_list_view(request):
-#     products = Product.objects.filter(product_status="published").order_by("-id")
-#     tags = Tag.objects.all().order_by("-id")[:6]
+def product_list_view(request):
+    products = Product.objects.filter(product_status="published").order_by("-id")
+    tags = Tag.objects.all().order_by("-id")[:6]
 
-#     context = {
-#         "products":products,
-#         "tags":tags,
-#     }
-
-#     return render(request, 'core/product-list.html', context)
-
-
-# def category_list_view(request):
-#     categories = Category.objects.all()
-
-#     context = {
-#         "categories":categories
-#     }
-#     return render(request, 'core/category-list.html', context)
+    context = {
+        "products":products,
+        "tags":tags,
+    }
+    return render(request, 'core/product-list.html', context)
 
 
-# def category_product_list__view(request, cid):
+def category_list_view(request):
+    categories = Category.objects.all()
 
-#     category = Category.objects.get(cid=cid) # food, Cosmetics
-#     products = Product.objects.filter(product_status="published", category=category)
-
-#     context = {
-#         "category":category,
-#         "products":products,
-#     }
-#     return render(request, "core/category-product-list.html", context)
+    context = {
+        "categories":categories
+    }
+    return render(request, 'core/category-list.html', context)
 
 
-# def vendor_list_view(request):
-#     vendors = Vendor.objects.all()
-#     context = {
-#         "vendors": vendors,
-#     }
-#     return render(request, "core/vendor-list.html", context)
+def category_product_list__view(request, cid):
+
+    category = Category.objects.get(cid=cid) 
+    products = Product.objects.filter(product_status="published", category=category)
+
+    context = {
+        "category":category,
+        "products":products,
+    }
+    return render(request, "core/category-product-list.html", context)
 
 
-# def vendor_detail_view(request, vid):
-#     vendor = Vendor.objects.get(vid=vid)
-#     products = Product.objects.filter(vendor=vendor, product_status="published").order_by("-id")
-
-#     context = {
-#         "vendor": vendor,
-#         "products": products,
-#     }
-#     return render(request, "core/vendor-detail.html", context)
+def vendor_list_view(request):
+    vendors = Vendor.objects.all()
+    context = {
+        "vendors": vendors,
+    }
+    return render(request, "core/vendor-list.html", context)
 
 
-# def product_detail_view(request, pid):
-#     product = Product.objects.get(pid=pid)
-#     # product = get_object_or_404(Product, pid=pid)
-#     products = Product.objects.filter(category=product.category).exclude(pid=pid)
+def vendor_detail_view(request, vid):
+    vendor = Vendor.objects.get(vid=vid)
+    products = Product.objects.filter(vendor=vendor, product_status="published").order_by("-id")
 
-#     # Getting all reviews related to a product
-#     reviews = ProductReview.objects.filter(product=product).order_by("-date")
-
-#     # Getting average review
-#     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
-
-#     # Product Review form
-#     review_form = ProductReviewForm()
+    context = {
+        "vendor": vendor,
+        "products": products,
+    }
+    return render(request, "core/vendor-detail.html", context)
 
 
-#     make_review = True 
+def product_detail_view(request, pid):
+    product = Product.objects.get(pid=pid)
+    # product = get_object_or_404(Product, pid=pid)
+    products = Product.objects.filter(category=product.category).exclude(pid=pid)
 
-#     if request.user.is_authenticated:
-#         address = Address.objects.get(status=True, user=request.user)
-#         user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+    # Getting all reviews related to a product
+    reviews = ProductReview.objects.filter(product=product).order_by("-date")
 
-#         if user_review_count > 0:
-#             make_review = False
+    # Getting average review
+    average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+
+    # Product Review form
+    review_form = ProductReviewForm()
+
+
+    make_review = True 
+
+    if request.user.is_authenticated:
+        address = Address.objects.get(status=True, user=request.user)
+        user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+
+        if user_review_count > 0:
+            make_review = False
     
-#     address = "Login To Continue"
+    address = "Login To Continue"
 
 
-#     p_image = product.p_images.all()
+    p_image = product.p_images.all()
 
-#     context = {
-#         "p": product,
-#         "address": address,
-#         "make_review": make_review,
-#         "review_form": review_form,
-#         "p_image": p_image,
-#         "average_rating": average_rating,
-#         "reviews": reviews,
-#         "products": products,
-#     }
+    context = {
+        "p": product,
+        "address": address,
+        "make_review": make_review,
+        "review_form": review_form,
+        "p_image": p_image,
+        "average_rating": average_rating,
+        "reviews": reviews,
+        "products": products,
+    }
 
-#     return render(request, "core/product-detail.html", context)
+    return render(request, "core/product-detail.html", context)
 
 # def tag_list(request, tag_slug=None):
 

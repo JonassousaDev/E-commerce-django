@@ -58,7 +58,7 @@ class Tags(models.Model):
 class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="ven", alphabet="abcdefgh12345")
 
-    title = models.CharField(max_length=100, default="Nestify")
+    title = models.CharField(max_length=100, default="Vendor")
     image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     cover_image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     description = models.TextField(null=True, blank=True, default="I am am Amazing Vendor")
