@@ -61,8 +61,8 @@ class Vendor(models.Model):
     title = models.CharField(max_length=100, default="Vendor")
     image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     cover_image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
-    description = models.TextField(null=True, blank=True, default="I am am Amazing Vendor")
-    # description = RichTextUploadingField(null=True, blank=True, default="I am am Amazing Vendor")
+    # description = models.TextField(null=True, blank=True, default="I am am Amazing Vendor")
+    description = RichTextUploadingField(null=True, blank=True, default="I am am Amazing Vendor")
 
     address = models.CharField(max_length=100, default="123 Main Street.")
     contact = models.CharField(max_length=100, default="+123 (456) 789")
@@ -94,14 +94,14 @@ class Product(models.Model):
 
     title = models.CharField(max_length=100, default="Product title")
     image = models.ImageField(upload_to=user_directory_path, default="product.jpg")
-    description = models.TextField(null=True, blank=True, default="This is the product")
-    # description = RichTextUploadingField(null=True, blank=True, default="This is the product")
+    # description = models.TextField(null=True, blank=True, default="This is the product")
+    description = RichTextUploadingField(null=True, blank=True, default="This is the product")
 
     price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="1.99")
     old_price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="2.99")
 
-    # specifications = RichTextUploadingField(null=True, blank=True)
-    specifications = models.TextField(null=True, blank=True)
+    specifications = RichTextUploadingField(null=True, blank=True)
+    # specifications = models.TextField(null=True, blank=True)
     type = models.CharField(max_length=100, default="Organic", null=True, blank=True)
     stock_count = models.CharField(max_length=100, default="10", null=True, blank=True)
     life = models.CharField(max_length=100, default="100 Days", null=True, blank=True)
@@ -134,9 +134,11 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    
     def get_percentage(self):
-        new_price = (self.price / self.old_price) * 100
+        new_price = ((self.price - self.old_price) / self.old_price) * 100
         return new_price
+
 
 
 class ProductImages(models.Model):
