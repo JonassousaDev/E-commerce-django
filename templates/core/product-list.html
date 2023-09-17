@@ -76,7 +76,7 @@
                                 <div class="card">
                                     <h5 class="mb-30">By Vendors</h5>
                                     <div class="d-flex">
-                                        <div class="customeee-checkbox mr-80">
+                                        <div class="custom-checkbox mr-80">
                                             {% for v in vendors %}
                                             <input class="form-check-input filter-checkbox" data-filter="vendor" type="checkbox" name="checkbox" id="exampleCheckbox1" value="{{ v.id }}" />
                                             <label class="form-check-label" for="exampleCheckbox1"><span>{{v.title}}</span></label>
@@ -113,7 +113,7 @@
                                                     <div class="caption">From: <strong id="slider-range-value1" class="text-brand">${{ min_max_price.price__min|floatformat:2 }}</strong></div>
                                                     <div class="caption">To: <strong id="slider-range-value2" class="text-brand">${{ min_max_price.price__max|floatformat:2 }}</strong></div>
                                                 </div>
-                                                <input type="number"  name="" value="{{ min_max_price.price__min|floatformat:2 }}" id="max_price" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" placeholder="Current Price" onkeyup="range.value=this.value">
+                                                <input type="number" name="" value="{{ min_max_price.price__max|floatformat:2 }}" id="max_price" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" placeholder="Maximum Price" onkeyup="range.value=this.value">
                                             </div>
                                         </div>
                                         <div class="custome-checkbox">
@@ -191,7 +191,7 @@
                                         <a href="{% url 'core:product-detail' p.pid %}" class="action-btn"><i class="fi-rs-eye"></i></a>
                                     </div>
                                     <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">-{{p.get_precentage|floatformat:0}}%</span>
+                                        <span class="hot">{{p.get_percentage|floatformat:0}}%</span>
                                     </div>
                                 </div>
                                 <div class="product-content-wrap">

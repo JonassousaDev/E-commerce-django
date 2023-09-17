@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
 
+    # PayPal Integration
+    'paypal.standard.ipn',
+
     #custom
     'core',
     'userauths',

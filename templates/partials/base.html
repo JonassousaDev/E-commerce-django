@@ -132,10 +132,10 @@
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info">
                             <ul>
-                                {% comment %} <li><a href="{% url 'core:about_us' %}">About Us</a></li>
-                                <li><a href="{% url 'core:dashboard' %}">My Account</a></li>
+                                {% comment %} <li><a href="{% url 'core:about_us' %}">About Us</a></li> {% endcomment %}
+                                {% comment %} <li><a href="{% url 'core:dashboard' %}">My Account</a></li> {% endcomment %}
                                 <li><a href="{% url 'core:wishlist' %}">Wishlist</a></li>
-                                <li><a href="{% url 'core:dashboard' %}">Order Tracking</a></li> {% endcomment %}
+                                {% comment %} <li><a href="{% url 'core:dashboard' %}">Order Tracking</a></li> {% endcomment %}
                             </ul>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="index.html"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
+                        <a href="{% url 'core:index' %}"><img src="{% static 'assets/imgs/theme/logo.svg' %}" alt="logo" /></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -244,7 +244,7 @@
                                     </a>
                                     <a href="shop-compare.html"><span class="lable ml-0">Compare</span></a>
                                 </div> -->
-                                {% comment %} <div class="header-action-icon-2">
+                                <div class="header-action-icon-2">
                                     <a href="{% url 'core:wishlist' %}">
                                         <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
                                         {% if request.user.is_authenticated %}
@@ -273,18 +273,18 @@
                                     </div>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a href="{% url 'core:dashboard' %}">
+                                    {% comment %} <a href="{% url 'core:dashboard' %}"> {% endcomment %}
                                         <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}" />
                                     </a>
-                                    <a href="{% url 'core:dashboard' %}"><span class="lable ml-0">Account</span></a>
+                                    {% comment %} <a href="{% url 'core:dashboard' %}"><span class="lable ml-0">Account</span></a> {% endcomment %}
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
-                                            <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>My Account</a></li>
-                                            <li><a href="{% url 'useradmin:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a></li>
+                                            {% comment %} <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>My Account</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'useradmin:dashboard' %}"><i class="fi fi-rs-user mr-10"></i>Admin Dashboard</a></li> {% endcomment %}
                                             <li><a href="page-account.html"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a></li>
                                             <!-- <li><a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My Voucher</a></li> -->
                                             <li><a href="{% url 'core:wishlist' %}"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a></li>
-                                            <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li>
+                                            {% comment %} <li><a href="{% url 'core:dashboard' %}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li> {% endcomment %}
                                             {% if request.user.is_authenticated %}
                                             <li><a href="{% url 'userauths:sign-out' %}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a></li>
                                             {% else %}
@@ -292,7 +292,7 @@
                                             {% endif %}
                                         </ul>
                                     </div>
-                                </div> {% endcomment %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,15 +315,18 @@
                                 <div class="d-flex categori-dropdown-inner">
                                     <ul>
                                         {% for c in categories %}
+
                                         <li>
                                             <a href="{% url 'core:category-product-list' c.cid %}"> <img src="{{ c.image.url }}" alt="" />{{c.title}}</a>
                                         </li>
                                         {% endfor %}
+
                                     </ul>
+
                                 </div>
+
                                 <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Show more...</span></div>
                             </div>
-                            
                         </div>
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
                             <nav>
@@ -342,6 +345,7 @@
                                             {% endfor %}
                                             <hr>
                                             <li><a href="{% url 'core:category-list' %}">All Categories</a></li>
+
                                         </ul>
                                     </li>
 
@@ -351,8 +355,9 @@
 
                                     <li>
                                         <a href="{% url 'core:vendor-list' %}">Vendors </a>
+
                                     </li>
-                                    {% comment %} <li class="position-static">
+                                    <li class="position-static">
                                         <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
                                         <ul class="mega-menu">
                                             <li class="sub-mega-menu sub-mega-menu-width-22">
@@ -411,21 +416,21 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </li> {% endcomment %}
-                                    {% comment %} <li>
+                                    </li>
+                                    <li>
                                         <a>Blog</a>
 
-                                    </li> {% endcomment %}
+                                    </li>
                                     <li>
                                         <a href="#">Pages <i class="fi-rs-angle-down"></i></a>
-                                        {% comment %} <ul class="sub-menu">
-                                            <li><a href="{% url 'core:about_us' %}">About Us</a></li>
-                                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
-                                            <li><a href="{% url 'core:dashboard' %}">My Dashboard</a></li>
-                                            <li><a href="{% url 'core:purchase_guide' %}">Purchase Guide</a></li>
-                                            <li><a href="{% url 'core:privacy_policy' %}">Privacy Policy</a></li>
-                                            <li><a href="{% url 'core:terms_of_service' %}">Terms of Service</a></li>
-                                        </ul> {% endcomment %}
+                                        <ul class="sub-menu">
+                                            {% comment %} <li><a href="{% url 'core:about_us' %}">About Us</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'core:contact' %}">Contact</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'core:dashboard' %}">My Dashboard</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'core:purchase_guide' %}">Purchase Guide</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'core:privacy_policy' %}">Privacy Policy</a></li> {% endcomment %}
+                                            {% comment %} <li><a href="{% url 'core:terms_of_service' %}">Terms of Service</a></li> {% endcomment %}
+                                        </ul>
                                     </li>
                                     <li>
                                         {% comment %} <a href="{% url 'core:contact' %}">Contact</a> {% endcomment %}
@@ -448,17 +453,17 @@
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                {% comment %} <a href="{% url 'core:wishlist' %}">
+                                <a href="{% url 'core:wishlist' %}">
                                     <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
                                     {% if request.user.is_authenticated %}
                                     <span class="pro-count blue">{{ wishlist.count }}</span>
                                     {% else %}
                                     <span class="pro-count blue">0</span>
                                     {% endif %}
-                                </a> {% endcomment %}
+                                </a>
                             </div>
                             <div class="header-action-icon-2">
-                                {% comment %} <a class="mini-cart-icon" href="{% url 'core:cart' %}"> {% endcomment %}
+                                <a class="mini-cart-icon" href="{% url 'core:cart' %}">
                                     <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
                                     <span class="pro-count white cart-items-count">{{ request.session.cart_data_obj|length }}</span>
                                 </a>
@@ -466,9 +471,9 @@
 
                                     <div class="shopping-cart-footer">
                                         <div class="shopping-cart-button">
-                                            {% comment %} <a href="{% url 'core:cart' %}">View cart</a>
+                                            <a href="{% url 'core:cart' %}">View cart</a>
                                             <a href="{% url 'core:checkout' %}">Checkout</a>
-                                        </div> {% endcomment %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
