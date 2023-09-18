@@ -6,6 +6,7 @@ from core.views import  category_product_list__view, category_list_view, tag_lis
 from core.views import ajax_add_review, search_view, filter_product
 from core.views import add_to_cart, cart_view, checkout_view, delete_item_from_cart, update_cart
 from core.views import wishlist_view, add_to_wishlist, remove_wishlist
+from core.views import payment_completed_view, payment_failed_view
 
 app_name = "core"
 
@@ -54,11 +55,11 @@ urlpatterns = [
     # # Paypal URL
     path('paypal/', include('paypal.standard.ipn.urls')),
 
-    # # Payment Successful
-    # path("payment-completed/", payment_completed_view, name="payment-completed"),
+    # Payment Successful
+    path("payment-completed/", payment_completed_view, name="payment-completed"),
 
-    # # Payment Failed
-    # path("payment-failed/", payment_failed_view, name="payment-failed"),
+    # Payment Failed
+    path("payment-failed/", payment_failed_view, name="payment-failed"),
 
     # # Dahboard URL
     # path("dashboard/", customer_dashboard, name="dashboard"),

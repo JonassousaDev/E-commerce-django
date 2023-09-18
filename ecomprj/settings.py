@@ -173,3 +173,7 @@ CKEDITOR_CONFIGS = {
         ),
     }
 }
+
+
+PAYPAL_RECEIVER_EMAIL = 'APIautenticador@gmail.com'
+PAYPAL_TEST = True
