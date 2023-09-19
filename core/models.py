@@ -130,9 +130,13 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    def get_precentage(self):
-        new_price = (self.price / self.old_price) * 100
-        return new_price
+    def get_percentage(self):
+        if self.old_price > 0:
+            discount_percentage = ((self.old_price - self.price) / self.old_price) * 100
+            return round(discount_percentage, 2)  # Arredonda para 2 casas decimais
+        else:
+            return 0  # Se o preço antigo for zero ou negativo, a porcentagem de desconto é 0%
+
 
 
 class ProductImages(models.Model):

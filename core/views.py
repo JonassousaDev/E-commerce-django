@@ -21,12 +21,13 @@ from django.db.models import Count, Avg
 from django.db.models.functions import ExtractMonth
 from django.core import serializers
 
+
 def index(request):
     # bannanas = Product.objects.all().order_by("-id")
     products = Product.objects.filter(product_status="published", featured=True).order_by("-id")
 
     context = {
-        "products":products
+        "products":products,     
     }
 
     return render(request, 'core/index.html', context)
@@ -122,6 +123,7 @@ def product_detail_view(request, pid):
         "average_rating": average_rating,
         "reviews": reviews,
         "products": products,
+              
     }
 
     return render(request, "core/product-detail.html", context)
