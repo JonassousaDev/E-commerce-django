@@ -40,11 +40,11 @@
     <h3>Popular Products</h3>
     <ul class="nav nav-tabs links" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" href="#tab-one" role="tab" aria-controls="tab-one" aria-selected="true">All</a>
+            <a class="nav-link active" id="nav-tab-one"  data-bs-target="#tab-one" href="{% url 'core:category-list' %}" role="tab" aria-controls="tab-one" aria-selected="true">All</a>
         </li>
         {% for category in categories %}
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="nav-tab-{{ category.cid }}" data-bs-toggle="tab" data-bs-target="#tab-{{ category.cid }}" href="{% url 'core:category-product-list' category.cid %}" role="tab" aria-controls="tab-{{ category.cid }}" aria-selected="false">{{ category.title }}</a>
+            <a class="nav-link" id="nav-tab-{{ category.cid }}"  data-bs-target="#tab-{{ category.cid }}" href="{% url 'core:category-product-list' category.cid %}" role="tab" aria-controls="tab-{{ category.cid }}" aria-selected="false">{{ category.title }}</a>
         </li>
         {% endfor %}
     </ul>

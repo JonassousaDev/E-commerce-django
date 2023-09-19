@@ -103,13 +103,15 @@ def product_detail_view(request, pid):
     make_review = True 
 
     if request.user.is_authenticated:
-        address = Address.objects.get(status=True, user=request.user)
-        user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+        try:
+            address = Address.objects.get(status=True, user=request.user)
+        except Address.DoesNotExist:
+            # Lidar com o caso em que o endereço não foi encontrado
+            address = None  # Ou outro tratamento adequado
 
-        if user_review_count > 0:
-            make_review = False
-    
-    address = "Login To Continue"
+    user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+    if user_review_count > 0:
+        make_review = False
 
 
     p_image = product.p_images.all()
@@ -431,7 +433,7 @@ def wishlist_view(request):
 def add_to_wishlist(request):
     product_id = request.GET['id']
     product = Product.objects.get(id=product_id)
-    print("product id isssssssssssss:" + product_id)
+    print("product id is:" + product_id)
 
     context = {}
 
