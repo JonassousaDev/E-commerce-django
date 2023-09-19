@@ -58,7 +58,7 @@ class Tags(models.Model):
 class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="ven", alphabet="abcdefgh12345")
 
-    title = models.CharField(max_length=100, default="Vendor")
+    title = models.CharField(max_length=100, default="Nestify")
     image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     cover_image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     # description = models.TextField(null=True, blank=True, default="I am am Amazing Vendor")
@@ -92,24 +92,20 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="category")
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name="product")
 
-    title = models.CharField(max_length=100, default="Product title")
+    title = models.CharField(max_length=100, default="Fresh Pear")
     image = models.ImageField(upload_to=user_directory_path, default="product.jpg")
-    # description = models.TextField(null=True, blank=True, default="This is the product")
     description = RichTextUploadingField(null=True, blank=True, default="This is the product")
 
     price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="1.99")
     old_price = models.DecimalField(max_digits=99999999999999, decimal_places=2, default="2.99")
 
     specifications = RichTextUploadingField(null=True, blank=True)
-    # specifications = models.TextField(null=True, blank=True)
     type = models.CharField(max_length=100, default="Organic", null=True, blank=True)
     stock_count = models.CharField(max_length=100, default="10", null=True, blank=True)
     life = models.CharField(max_length=100, default="100 Days", null=True, blank=True)
     mfd = models.DateTimeField(auto_now_add=False, null=True, blank=True)
 
     tags = TaggableManager(blank=True)
-
-    # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
 
     product_status = models.CharField(choices=STATUS, max_length=10, default="in_review")
 
@@ -134,11 +130,9 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    
-    def get_percentage(self):
-        new_price = ((self.price - self.old_price) / self.old_price) * 100
+    def get_precentage(self):
+        new_price = (self.price / self.old_price) * 100
         return new_price
-
 
 
 class ProductImages(models.Model):

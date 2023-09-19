@@ -1,11 +1,11 @@
 
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
-# from regex import E
+from regex import E
 from requests import session
 from taggit.models import Tag
 from core.models import Product, Category, Vendor, CartOrder, CartOrderProducts, ProductImages, ProductReview, wishlist_model, Address
-from userauths.models import  Profile  #ContactUs
+from userauths.models import ContactUs, Profile
 from core.forms import ProductReviewForm
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -16,17 +16,19 @@ from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from django.contrib.auth.decorators import login_required
 
-# import calendar
+import calendar
 from django.db.models import Count, Avg
-from django.db.models.functions import ExtractMonth,calendar
+from django.db.models.functions import ExtractMonth
 from django.core import serializers
 
 def index(request):
+    # bannanas = Product.objects.all().order_by("-id")
     products = Product.objects.filter(product_status="published", featured=True).order_by("-id")
 
     context = {
         "products":products
     }
+
     return render(request, 'core/index.html', context)
 
 
@@ -38,6 +40,7 @@ def product_list_view(request):
         "products":products,
         "tags":tags,
     }
+
     return render(request, 'core/product-list.html', context)
 
 
@@ -52,7 +55,7 @@ def category_list_view(request):
 
 def category_product_list__view(request, cid):
 
-    category = Category.objects.get(cid=cid) 
+    category = Category.objects.get(cid=cid) # food, Cosmetics
     products = Product.objects.filter(product_status="published", category=category)
 
     context = {
@@ -83,17 +86,18 @@ def vendor_detail_view(request, vid):
 
 def product_detail_view(request, pid):
     product = Product.objects.get(pid=pid)
-    # # product = get_object_or_404(Product, pid=pid)
+    # product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
 
-    # # Getting all reviews related to a product
+    # Getting all reviews related to a product
     reviews = ProductReview.objects.filter(product=product).order_by("-date")
 
-    # # Getting average review
+    # Getting average review
     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
 
-    # # Product Review form
+    # Product Review form
     review_form = ProductReviewForm()
+
 
     make_review = True 
 
@@ -304,7 +308,7 @@ def checkout_view(request):
 
             cart_order_products = CartOrderProducts.objects.create(
                 order=order,
-                invoice_no="INVOICE_NO-" + str(order.id),
+                invoice_no="INVOICE_NO-" + str(order.id), # INVOICE_NO-5,
                 item=item['title'],
                 image=item['image'],
                 qty=item['qty'],
@@ -325,6 +329,11 @@ def checkout_view(request):
         }
 
         paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
+
+        # cart_total_amount = 0
+        # if 'cart_data_obj' in request.session:
+        #     for p_id, item in request.session['cart_data_obj'].items():
+        #         cart_total_amount += int(item['qty']) * float(item['price'])
 
         try:
             active_address = Address.objects.get(user=request.user, status=True)
@@ -414,10 +423,13 @@ def wishlist_view(request):
     }
     return render(request, "core/wishlist.html", context)
 
+
+    # w
+
 def add_to_wishlist(request):
     product_id = request.GET['id']
     product = Product.objects.get(id=product_id)
-    print("product id is:" + product_id)
+    print("product id isssssssssssss:" + product_id)
 
     context = {}
 
@@ -440,6 +452,20 @@ def add_to_wishlist(request):
     return JsonResponse(context)
 
 
+# def remove_wishlist(request):
+#     pid = request.GET['id']
+#     wishlist = wishlist_model.objects.filter(user=request.user).values()
+
+#     product = wishlist_model.objects.get(id=pid)
+#     h = product.delete()
+
+#     context = {
+#         "bool": True,
+#         "wishlist":wishlist
+#     }
+#     t = render_to_string("core/async/wishlist-list.html", context)
+#     return JsonResponse({"data": t, "w":wishlist})
+
 def remove_wishlist(request):
     pid = request.GET['id']
     wishlist = wishlist_model.objects.filter(user=request.user)
@@ -458,45 +484,45 @@ def remove_wishlist(request):
 
 
 
-# # Other Pages 
-# def contact(request):
-#     return render(request, "core/contact.html")
+# Other Pages 
+def contact(request):
+    return render(request, "core/contact.html")
 
 
-# def ajax_contact_form(request):
-#     full_name = request.GET['full_name']
-#     email = request.GET['email']
-#     phone = request.GET['phone']
-#     subject = request.GET['subject']
-#     message = request.GET['message']
+def ajax_contact_form(request):
+    full_name = request.GET['full_name']
+    email = request.GET['email']
+    phone = request.GET['phone']
+    subject = request.GET['subject']
+    message = request.GET['message']
 
-#     contact = ContactUs.objects.create(
-#         full_name=full_name,
-#         email=email,
-#         phone=phone,
-#         subject=subject,
-#         message=message,
-#     )
+    contact = ContactUs.objects.create(
+        full_name=full_name,
+        email=email,
+        phone=phone,
+        subject=subject,
+        message=message,
+    )
 
-#     data = {
-#         "bool": True,
-#         "message": "Message Sent Successfully"
-#     }
+    data = {
+        "bool": True,
+        "message": "Message Sent Successfully"
+    }
 
-#     return JsonResponse({"data":data})
-
-
-# def about_us(request):
-#     return render(request, "core/about_us.html")
+    return JsonResponse({"data":data})
 
 
-# def purchase_guide(request):
-#     return render(request, "core/purchase_guide.html")
+def about_us(request):
+    return render(request, "core/about_us.html")
 
-# def privacy_policy(request):
-#     return render(request, "core/privacy_policy.html")
 
-# def terms_of_service(request):
-#     return render(request, "core/terms_of_service.html")
+def purchase_guide(request):
+    return render(request, "core/purchase_guide.html")
+
+def privacy_policy(request):
+    return render(request, "core/privacy_policy.html")
+
+def terms_of_service(request):
+    return render(request, "core/terms_of_service.html")
 
 

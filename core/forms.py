@@ -1,5 +1,5 @@
 from django import forms
-# from stripe import Review 
+from stripe import Review 
 from core.models import ProductReview
 
 
