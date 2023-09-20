@@ -421,14 +421,14 @@ def make_address_default(request):
 
 @login_required
 def wishlist_view(request):
-    wishlist = wishlist_model.objects.all()
+    # Filtrar os itens da lista de desejos apenas para o usuário autenticado
+    wishlist = wishlist_model.objects.filter(user=request.user)
+    
     context = {
-        "w":wishlist
+        "wishlist": wishlist 
     }
     return render(request, "core/wishlist.html", context)
 
-
-    # w
 
 def add_to_wishlist(request):
     product_id = request.GET['id']
